@@ -9,7 +9,7 @@ import java.util.Scanner;
 import soap.generated.Calculator;
 import soap.generated.CalculatorImplService;
 
-public class CalculatorClient {
+public class CalculatorClientBU {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);

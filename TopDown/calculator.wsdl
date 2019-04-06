@@ -1,0 +1,93 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://services.soap/" name="CalculatorImplService">
+<types/>
+<message name="sub">
+<part name="arg0" type="xsd:float"/>
+<part name="arg1" type="xsd:float"/>
+</message>
+<message name="subResponse">
+<part name="return" type="xsd:float"/>
+</message>
+<message name="div">
+<part name="arg0" type="xsd:float"/>
+<part name="arg1" type="xsd:float"/>
+</message>
+<message name="divResponse">
+<part name="return" type="xsd:float"/>
+</message>
+<message name="mul">
+<part name="arg0" type="xsd:float"/>
+<part name="arg1" type="xsd:float"/>
+</message>
+<message name="mulResponse">
+<part name="return" type="xsd:float"/>
+</message>
+<message name="add">
+<part name="arg0" type="xsd:float"/>
+<part name="arg1" type="xsd:float"/>
+</message>
+<message name="addResponse">
+<part name="return" type="xsd:float"/>
+</message>
+<portType name="Calculator">
+<operation name="sub" parameterOrder="arg0 arg1">
+<input wsam:Action="http://services.soap/Calculator/subRequest" message="tns:sub"/>
+<output wsam:Action="http://services.soap/Calculator/subResponse" message="tns:subResponse"/>
+</operation>
+<operation name="div" parameterOrder="arg0 arg1">
+<input wsam:Action="http://services.soap/Calculator/divRequest" message="tns:div"/>
+<output wsam:Action="http://services.soap/Calculator/divResponse" message="tns:divResponse"/>
+</operation>
+<operation name="mul" parameterOrder="arg0 arg1">
+<input wsam:Action="http://services.soap/Calculator/mulRequest" message="tns:mul"/>
+<output wsam:Action="http://services.soap/Calculator/mulResponse" message="tns:mulResponse"/>
+</operation>
+<operation name="add" parameterOrder="arg0 arg1">
+<input wsam:Action="http://services.soap/Calculator/addRequest" message="tns:add"/>
+<output wsam:Action="http://services.soap/Calculator/addResponse" message="tns:addResponse"/>
+</operation>
+</portType>
+<binding name="CalculatorImplPortBinding" type="tns:Calculator">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+<operation name="sub">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</output>
+</operation>
+<operation name="div">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</output>
+</operation>
+<operation name="mul">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</output>
+</operation>
+<operation name="add">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://services.soap/"/>
+</output>
+</operation>
+</binding>
+<service name="CalculatorImplService">
+<port name="CalculatorImplPort" binding="tns:CalculatorImplPortBinding">
+<soap:address location="http://localhost:8080/CalculatorJAX_BU/calculator"/>
+</port>
+</service>
+</definitions>
