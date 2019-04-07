@@ -11,23 +11,18 @@ public final class ShortenerRepository {
 		private ShortenerRepository()
 		{
 			shortens = new ArrayList<>();
-			
-			Shortener a1 = new Shortener();
-			a1.setLongURL("www.amazon.com");
-			a1.setShortURL("www.short.com");
-			a1.setId(1);
-			
-			Shortener a2 = new Shortener();
-			a2.setLongURL("www.yahoo.com");
-			a2.setShortURL("www.short.com");
-			a2.setId(2);
-			
-			shortens.add(a1);
-			shortens.add(a2);
 		}
 		
 		public List<Shortener> getShortens(){
 			return shortens;
+		}
+		
+		public List<Integer> getKeys(){
+			List<Integer> Keys = new ArrayList<>();
+			for (Shortener a : shortens) {
+				Keys.add(a.getId());
+			}
+			return Keys;
 		}
 		
 		public Shortener getShortenById(int id) {
@@ -39,8 +34,17 @@ public final class ShortenerRepository {
 			return null;
 		}
 		
-		public void create(Shortener a1) {
+		public void create(String url) {
+			Shortener a1 = new Shortener();
+			a1.setLongURL(url);
+			if (shortens.size() == 0) {
+				a1.setId(0);
+			}
+			else {
+				a1.setId(shortens.size()+1);
+			}
 			shortens.add(a1);
+
 			System.out.println(shortens);
 		}
 		
@@ -56,6 +60,21 @@ public final class ShortenerRepository {
 				i++;
 			}
 			return null;
+		}
+		
+		public void delete(int Id) {
+			int i = 0;
+			for (Shortener a : shortens) {
+				if(a.getId()==Id) {
+					shortens.remove(i);
+					System.out.println(shortens);
+				}		
+				i++;
+			}
+		}
+		
+		public void delete() {
+			shortens.clear();
 		}
 
 	}

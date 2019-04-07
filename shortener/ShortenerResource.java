@@ -3,6 +3,7 @@ package com.URLshortener.shortener;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,7 +22,7 @@ public class ShortenerResource {
     ShortenerRepository repo = ShortenerRepository.repo;
     
     /** 
-     * We do NOT need that
+     * For Testing purposes
      * Method handling HTTP GET requests. 
      * It returns all the URLs and IDs
      *
@@ -36,6 +37,14 @@ public class ShortenerResource {
 		return repo.getShortens();
 	}
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getKeys() {
+		
+		String msg = String.format("The Keys (IDs) are: %s ", repo.getKeys());
+		return Response.status(200).entity(msg).build();
+	}
+	
 	/**
      * Method handling HTTP GET requests by giving an Id. 
      * The returned value is the LongURL of the given Id.
@@ -43,7 +52,7 @@ public class ShortenerResource {
      * @return String that will be returned as a application/json response.
      */
 	@GET
-	@Path("shorten/{Id}")
+	@Path("{Id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getShortenById(@PathParam("Id") int Id) {
 		System.out.println("shortens...");
@@ -59,17 +68,15 @@ public class ShortenerResource {
 	}
 	
 	@POST
-	@Path("shorten")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Shortener createShorten(Shortener a1) {
-		System.out.println(a1);
-		repo.create(a1);
+	public String createShorten(String url) {
+		repo.create(url);
 		
-		return a1;
+		return url;
 	}
 	
 	@PUT
-	@Path("shorten/{Id}")
+	@Path("{Id}")
 	@Consumes(MediaType.APPLICATION_XML)
 	public Response updateShortenById(@PathParam("Id") int Id, Shortener a1) {		
 		try {
@@ -79,10 +86,21 @@ public class ShortenerResource {
 			return Response.status(404).entity("NOT FOUND").build();
 		}
 	}
-}
-
-
-// curl http://localhost:8080/shortener/webapi/shortener/shorten/1
-//POST:  curl -H "Content-Type: application/xml" -d "<shortener><longURL>www.google.com</longURL><shortURL>www.short.com</shortURL><id>1222</id></shortener>" -X POST http://localhost:8080/shortener/webapi/shortener/shorten
-// PUT:  curl -H "Content-Type: application/xml" -d "<shortener><longURL>www.paok.com</longURL><shortURL>www.short.com</shortURL><id>1222</id></shortener>" -X PUT http://localhost:8080/shortener/webapi/shortener/shorten/1
 	
+	@DELETE
+	@Path("{Id}")
+	public Response deleteShortenById(@PathParam("Id") int Id) {		
+		try {
+			repo.delete(Id);
+			return Response.status(204).entity("DELETED").build();
+		} catch(Exception e) {
+			return Response.status(404).entity("NOT FOUND").build();
+		}
+	}
+	
+	@DELETE
+	public Response deleteShorten() {		
+		repo.delete();
+		return Response.status(204).entity("DELETED").build();
+	}	
+}	
