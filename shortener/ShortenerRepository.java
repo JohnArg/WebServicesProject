@@ -3,11 +3,12 @@ package com.URLshortener.shortener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShortenerRepository {
+public final class ShortenerRepository {
 	
 		List<Shortener> shortens;
+		public static final ShortenerRepository repo = new ShortenerRepository();
 		
-		public ShortenerRepository()
+		private ShortenerRepository()
 		{
 			shortens = new ArrayList<>();
 			
@@ -40,13 +41,19 @@ public class ShortenerRepository {
 		
 		public void create(Shortener a1) {
 			shortens.add(a1);
+			System.out.println(shortens);
 		}
 		
 		public Shortener update(int Id, Shortener a1) {
+			int i = 0;
 			for (Shortener a : shortens) {
-				if(a.getId()==Id)
+				if(a.getId()==Id) {
 					a = a1;
+					shortens.set(i, a);
+					System.out.println(shortens);
 					return a;
+				}		
+				i++;
 			}
 			return null;
 		}

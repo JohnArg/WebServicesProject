@@ -12,12 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+/**
+ * Root resource (exposed at "shortener" path)
+ */
 @Path("shortener")
 public class ShortenerResource {
     
-    ShortenerRepository repo = new ShortenerRepository();
-	
+    ShortenerRepository repo = ShortenerRepository.repo;
+    
     /** 
      * We do NOT need that
      * Method handling HTTP GET requests. 
@@ -58,7 +60,7 @@ public class ShortenerResource {
 	
 	@POST
 	@Path("shorten")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_XML)
 	public Shortener createShorten(Shortener a1) {
 		System.out.println(a1);
 		repo.create(a1);
@@ -69,10 +71,13 @@ public class ShortenerResource {
 	@PUT
 	@Path("shorten/{Id}")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Shortener updateShortenById(@PathParam("Id") int Id, Shortener a1) {	
-		Shortener a = repo.update(Id, a1);
-		
-		return a;
+	public Response updateShortenById(@PathParam("Id") int Id, Shortener a1) {		
+		try {
+			Shortener a = repo.update(Id, a1);
+			return Response.status(301).entity(a).build();
+		} catch(Exception e) {
+			return Response.status(404).entity("NOT FOUND").build();
+		}
 	}
 }
 
