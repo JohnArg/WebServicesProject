@@ -57,14 +57,12 @@ public class ShortenerResource {
 	public Response getShortenById(@PathParam("Id") int Id) {
 		System.out.println("shortens...");
 		
-		try{
-			Shortener value = repo.getShortenById(Id);	
-			String msg = String.format("The value is: %s ", value.getLongURL());       
-	        return Response.status(301).entity(msg).build();       
-			}
-			catch(Exception e) {
-				return Response.status(404).entity("NOT FOUND").build();
-			}	
+		Shortener value = repo.getShortenById(Id);	    
+		if (value != null) {
+			String msg = String.format("The value is: %s ", value.getUrl());
+			return Response.status(301).entity(msg).build();
+		}
+		return Response.status(404).entity("NOT FOUND").build();	
 	}
 	
 	@POST
@@ -78,24 +76,27 @@ public class ShortenerResource {
 	@PUT
 	@Path("{Id}")
 	@Consumes(MediaType.APPLICATION_XML)
-	public Response updateShortenById(@PathParam("Id") int Id, Shortener a1) {		
+	public Response updateShortenById(@PathParam("Id") int Id, String url) {		
+		Shortener a = null;
 		try {
-			Shortener a = repo.update(Id, a1);
-			return Response.status(301).entity(a).build();
-		} catch(Exception e) {
-			return Response.status(404).entity("NOT FOUND").build();
-		}
+			a = repo.update(Id, url);
+			if (a != null) {
+				return Response.status(301).entity(a).build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return Response.status(404).entity("NOT FOUND").build();
 	}
 	
 	@DELETE
 	@Path("{Id}")
 	public Response deleteShortenById(@PathParam("Id") int Id) {		
-		try {
-			repo.delete(Id);
+		int del = repo.delete(Id);
+		if (del == 1){
 			return Response.status(204).entity("DELETED").build();
-		} catch(Exception e) {
-			return Response.status(404).entity("NOT FOUND").build();
 		}
+		return Response.status(404).entity("NOT FOUND").build();	
 	}
 	
 	@DELETE
