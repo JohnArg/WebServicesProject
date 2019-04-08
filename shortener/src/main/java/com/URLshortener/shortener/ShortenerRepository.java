@@ -1,6 +1,7 @@
 package com.URLshortener.shortener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ShortenerRepository {
@@ -34,8 +35,7 @@ public final class ShortenerRepository {
 			return null;
 		}
 		
-		//NEED changes...if a key deleted there is a counting problem 
-		//to do: check for correctness
+		//TO DO: check for URL correctness
 		public void create(String url) {
 			Shortener a1 = new Shortener();
 			a1.setUrl(url);
@@ -43,7 +43,26 @@ public final class ShortenerRepository {
 				a1.setId(0);
 			}
 			else {
+				int[] idsArray = new int[shortens.size()];
+				
+				//retrieve all Ids and store them in an array
+				int i=0;
+				for (Shortener a : shortens) {
+					idsArray[i] = a.getId();
+					i++;
+				}
+				
+				//sort the array
+				Arrays.sort(idsArray);
+				
+				//find the smallest missing id
 				a1.setId(shortens.size());
+				for (int i1=0 ; i1<shortens.size() ; i1++) {
+					if (idsArray[i1] != i1) {
+						a1.setId(i1);
+						break;
+					}
+				}
 			}
 			shortens.add(a1);
 
