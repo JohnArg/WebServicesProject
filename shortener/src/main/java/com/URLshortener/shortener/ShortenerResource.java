@@ -32,7 +32,7 @@ public class ShortenerResource {
      */
 	@GET
 	@Path("shortens")
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List <Shortener> getShortens() {
 		System.out.println("shortens...");
 		
@@ -68,7 +68,7 @@ public class ShortenerResource {
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createShorten(String url) {
 		
 		try {
@@ -83,7 +83,7 @@ public class ShortenerResource {
 	
 	@PUT
 	@Path("{Id}")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateShortenById(@PathParam("Id") int Id, String url) {		
 		Shortener a = null;
 		try {
