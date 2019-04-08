@@ -1,5 +1,7 @@
 package com.URLshortener.shortener;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -67,10 +69,16 @@ public class ShortenerResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_XML)
-	public String createShorten(String url) {
-		repo.create(url);
+	public Response createShorten(String url) {
 		
-		return url;
+		try {
+			URL url1 = new URL(url);
+			int id = repo.create(url);
+			return Response.status(301).entity(id).build();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return Response.status(400).entity("Error...URL is invalid").build();
+		}	
 	}
 	
 	@PUT

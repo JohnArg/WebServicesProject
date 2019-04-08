@@ -36,7 +36,7 @@ public final class ShortenerRepository {
 		}
 		
 		//TO DO: check for URL correctness
-		public void create(String url) {
+		public int create(String url) {
 			Shortener a1 = new Shortener();
 			a1.setUrl(url);
 			if (shortens.size() == 0) {
@@ -65,8 +65,7 @@ public final class ShortenerRepository {
 				}
 			}
 			shortens.add(a1);
-
-			System.out.println(shortens);
+			return a1.getId();
 		}
 		
 		public Shortener update(int Id, String url) throws Exception {
