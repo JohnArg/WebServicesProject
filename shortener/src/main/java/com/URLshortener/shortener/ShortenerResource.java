@@ -87,10 +87,14 @@ public class ShortenerResource {
 	public Response updateShortenById(@PathParam("Id") int Id, String url) {		
 		Shortener a = null;
 		try {
+			URL url1 = new URL(url);
 			a = repo.update(Id, url);
 			if (a != null) {
 				return Response.status(301).entity(a).build();
 			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return Response.status(400).entity("Error...URL is invalid").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
