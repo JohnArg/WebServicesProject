@@ -1,6 +1,8 @@
 package com.URLshortener.shortener;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
@@ -62,12 +64,19 @@ public class ShortenerResource {
 	public Response getShortenById(@PathParam("Id") int Id) {
 		System.out.println("shortens...");
 		
-		Shortener value = repo.getShortenById(Id);	    
-		if (value != null) {
-			String msg = String.format("The value is: %s ", value.getUrl());
-			return Response.status(301).entity(msg).build();
+		Shortener value = repo.getShortenById(Id);
+		URI new_url = null;
+		try {
+			new_url = new URI(value.getUrl());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			
 		}
-		return Response.status(404).entity("NOT FOUND").build();	
+		if (value != null) {
+			String msg = String.format(value.getUrl());
+			return Response.status(301).location(new_url).build();
+		}	
+		return Response.status(404).entity("NOT FOUND").build();
 	}
 	
 	@POST
@@ -77,7 +86,7 @@ public class ShortenerResource {
 		try {
 			URL url1 = new URL(shortener.getUrl());
 			int id = repo.create(shortener.getUrl());
-			return Response.status(301).entity("id = "+id).build();
+			return Response.status(201).entity("id = "+id).build();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return Response.status(400).entity("Error...URL is invalid").build();
