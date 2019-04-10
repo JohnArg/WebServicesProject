@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="CalculatorJAX_TD/src"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/FastInfoset.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/gmbal-api-only.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/ha-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/istack-commons-runtime.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/javax.activation-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/javax.activation.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/javax.annotation-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/javax.xml.soap-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxb-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxb-jxc.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxb-runtime.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxb-xjc.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxws-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxws-rt.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/jaxws-tools.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/management-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/mimepull.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/policy.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/saaj-impl.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/stax-ex.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/stax2-api.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/streambuffer.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/txw2.jar"/>
+	<classpathentry kind="lib" path="CalculatorJAX_TD/WebContent/WEB-INF/lib/woodstox-core.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

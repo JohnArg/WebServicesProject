@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -28,7 +30,7 @@ public class ShortenerResource {
      * Method handling HTTP GET requests. 
      * It returns all the URLs and IDs
      *
-     * @return String that will be returned as a application/xml response.
+     * @return String that will be returned as a application/json response.
      */
 	@GET
 	@Path("shortens")
@@ -39,6 +41,7 @@ public class ShortenerResource {
 		return repo.getShortens();
 	}
 	
+	//Get all the ids
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getKeys() {
@@ -69,12 +72,12 @@ public class ShortenerResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createShorten(String url) {
+	public Response createShorten(final Shortener shortener) {
 		
 		try {
-			URL url1 = new URL(url);
-			int id = repo.create(url);
-			return Response.status(301).entity(id).build();
+			URL url1 = new URL(shortener.getUrl());
+			int id = repo.create(shortener.getUrl());
+			return Response.status(301).entity("id = "+id).build();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return Response.status(400).entity("Error...URL is invalid").build();
@@ -84,13 +87,13 @@ public class ShortenerResource {
 	@PUT
 	@Path("{Id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateShortenById(@PathParam("Id") int Id, String url) {		
+	public Response updateShortenById(@PathParam("Id") int Id, final Shortener shortener) {		
 		Shortener a = null;
 		try {
-			URL url1 = new URL(url);
-			a = repo.update(Id, url);
+			URL url1 = new URL(shortener.getUrl());
+			a = repo.update(Id, shortener.getUrl());
 			if (a != null) {
-				return Response.status(301).entity(a).build();
+				return Response.status(200).entity("OK").build();
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
