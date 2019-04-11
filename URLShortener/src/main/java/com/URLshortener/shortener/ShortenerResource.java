@@ -1,3 +1,4 @@
+/* This is the resource class. It defines the paths and the accepted methods */
 package com.URLshortener.shortener;
 
 import java.net.MalformedURLException;
@@ -8,14 +9,12 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,7 +28,7 @@ public class ShortenerResource {
     
     /** 
      * For Testing purposes
-     * Method handling HTTP GET requests. 
+     * Method handling HTTP GET requests in path "/shortens". 
      * It returns all the URLs and IDs
      *
      * @return String that will be returned as a application/json response.
@@ -43,7 +42,12 @@ public class ShortenerResource {
 		return repo.getShortens();
 	}
 	
-	//Get all the ids
+	/** 
+     * Method handling HTTP GET requests. 
+     * It returns all the Keys (IDs) of all the stored URLs
+     *
+     * @return String that will be returned as a application/json response.
+     */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getKeys() {
@@ -54,9 +58,9 @@ public class ShortenerResource {
 	
 	/**
      * Method handling HTTP GET requests by giving an Id. 
-     * The returned value is the LongURL of the given Id.
-     *
-     * @return String that will be returned as a application/json response.
+     * The returned value is the long URL of the given Id.
+     * It returns 301 status code, and client redirects in the url
+     * It return 404 status code, in case the id is not found
      */
 	@GET
 	@Path("{Id}")
@@ -65,6 +69,10 @@ public class ShortenerResource {
 		System.out.println("shortens...");
 		
 		Shortener value = repo.getShortenById(Id);
+		if (value == null) {
+			return Response.status(404).entity("NOT FOUND").build();
+		}
+		
 		URI new_url = null;
 		try {
 			new_url = new URI(value.getUrl());
@@ -72,13 +80,15 @@ public class ShortenerResource {
 			e.printStackTrace();
 			
 		}
-		if (value != null) {
-			String msg = String.format(value.getUrl());
-			return Response.status(301).location(new_url).build();
-		}	
-		return Response.status(404).entity("NOT FOUND").build();
+		return Response.status(301).location(new_url).build();		
 	}
 	
+	/**
+     * Method handling HTTP POST requests. 
+     * Accepts application/json with a new url.
+     * After the URL is stored, it returns the id assigned to it, with status code 201
+     * or 400 in case of invalid URL
+     */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createShorten(final Shortener shortener) {
@@ -93,6 +103,12 @@ public class ShortenerResource {
 		}	
 	}
 	
+	/**
+     * Method handling HTTP PUT requests with a path parameter, the id. 
+     * Accepts application/json body with a new url.
+     * After the URL is updated, it returns status code 200 (If id exists),
+     * 400 in case of invalid URL or 404 in case the id is not found
+     */
 	@PUT
 	@Path("{Id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -113,6 +129,11 @@ public class ShortenerResource {
 		return Response.status(404).entity("NOT FOUND").build();
 	}
 	
+	/**
+     * Method handling HTTP DELETE requests with a path parameter, the id. 
+     * After the URL is deleted, it returns status code 204,
+     * or 404 in case the id is not found
+     */
 	@DELETE
 	@Path("{Id}")
 	public Response deleteShortenById(@PathParam("Id") int Id) {		
@@ -123,6 +144,11 @@ public class ShortenerResource {
 		return Response.status(404).entity("NOT FOUND").build();	
 	}
 	
+	/**
+     * Method handling HTTP DELETE requests. 
+     * After all the entries in the arraylist are deleted, 
+     * it returns status code 204
+     */
 	@DELETE
 	public Response deleteShorten() {		
 		repo.delete();

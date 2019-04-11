@@ -1,3 +1,4 @@
+/* This class is the model class*/
 package com.URLshortener.shortener;
 
 import javax.xml.bind.annotation.XmlRootElement;

@@ -1,3 +1,4 @@
+/* This class serves in-memory objects for Rest API's */
 package com.URLshortener.shortener;
 
 import java.util.ArrayList;
@@ -14,10 +15,16 @@ public final class ShortenerRepository {
 			shortens = new ArrayList<>();
 		}
 		
+		/**
+		 * Return the list with URLs and ids
+		 */
 		public List<Shortener> getShortens(){
 			return shortens;
 		}
 		
+		/**
+		 * Return all the stored Keys (ids)
+		 */
 		public List<Integer> getKeys(){
 			List<Integer> Keys = new ArrayList<>();
 			for (Shortener a : shortens) {
@@ -26,6 +33,9 @@ public final class ShortenerRepository {
 			return Keys;
 		}
 		
+		/**
+		 * Return the object Shortener with the given id
+		 */
 		public Shortener getShortenById(int id) {
 			
 			for (Shortener a : shortens) {
@@ -35,7 +45,10 @@ public final class ShortenerRepository {
 			return null;
 		}
 		
-		//TO DO: check for URL correctness
+		/**
+		 * Store the URL and assign an id to it
+		 * Return the assigned id
+		 */
 		public int create(String url) {
 			Shortener a1 = new Shortener();
 			a1.setUrl(url);
@@ -68,6 +81,13 @@ public final class ShortenerRepository {
 			return a1.getId();
 		}
 		
+		/**
+		 * Accepts an id and a url as a parameters.
+		 * If the id does not exist in the Arraylist it returns null
+		 * If exists, the function updates the URL assigned in the specific id
+		 * with the new given url.
+		 * Return the object Shortener with the given id
+		 */
 		public Shortener update(int Id, String url) throws Exception {
 			int i = 0;
 			for (Shortener a : shortens) {
@@ -82,6 +102,10 @@ public final class ShortenerRepository {
 			return null;
 		}
 		
+		/**
+		 * Delete the object Shortener with the given id (if exists)
+		 * Return 1 if the id exists (and deleted), or 0 if not found
+		 */
 		//delete a url
 		//Returns 1 if deleted
 		public int delete(int Id) {
@@ -97,6 +121,9 @@ public final class ShortenerRepository {
 			return 0;
 		}
 		
+		/**
+		 * Delete everything in the Arraylist
+		 */
 		public void delete() {
 			shortens.clear();
 		}
