@@ -1,6 +1,6 @@
-#Web Services Project
+# Web Services Project
 
-##JAX-WS and REST (Jersey)
+## JAX-WS and REST (Jersey)
 
 ---
 
